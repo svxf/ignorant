@@ -1,4 +1,4 @@
-javascript:!function(){let e=document.createElement("div"),t=document.createElement("div"),o=document.createElement("img");e.id="pop",e.style=`font-family: "Gotham Circular", sans-serif; 
+javascript:!function(){let e="https://e20c-35-243-154-162.ngrok-free.app",t=document.createElement("div"),o=document.createElement("div"),r=document.createElement("img");t.id="pop",t.style=`font-family: "Gotham Circular", sans-serif; 
     position:absolute; 
     font-size:36px; 
     color: #fff; 
@@ -11,13 +11,13 @@ javascript:!function(){let e=document.createElement("div"),t=document.createElem
     opacity: 0; 
     transition: opacity .2s, transform 0.2s, width 1.2s ease-in-out, left .2s ease-in-out; 
     display: none ;
-    transform: scale(0.5);`,t.style=`position: absolute;
+    transform: scale(0.5);`,o.style=`position: absolute;
     bottom: -10px;
     left: 50%;
     margin-left: -10px;
     filter: drop-shadow(0 0 0.75rem crimson);
     transform: scale(1.2);
-    `,t.style.backdropFilter="none",t.style.borderTop="10px solid rgb(32, 32, 32)",t.style.borderRight="10px solid transparent",t.style.borderLeft="10px solid transparent",o.src="https://a91b-35-243-154-162.ngrok-free.app/static/aria.jpg",o.style=`border-radius: 1em;
+    `,o.style.backdropFilter="none",o.style.borderTop="10px solid rgb(32, 32, 32)",o.style.borderRight="10px solid transparent",o.style.borderLeft="10px solid transparent",r.src=e+"/static/aria.jpg",r.style=`border-radius: 1em;
     background-color: #242424;
     --webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
@@ -25,7 +25,7 @@ javascript:!function(){let e=document.createElement("div"),t=document.createElem
     height: 64px;
     filter: hue-rotate(180deg);
     transition: opacity .2s, transform 0.2s;
-    `;let r=document.createElement("div"),n=document.createElement("span");r.id="a",n.id="b";let a=document.createElement("style");a.innerHTML=`
+    `;let n=document.createElement("div"),l=document.createElement("span");n.id="a",l.id="b";let i=document.createElement("style");i.innerHTML=`
     #a::-webkit-scrollbar {
       width: 1px;
     }
@@ -35,4 +35,4 @@ javascript:!function(){let e=document.createElement("div"),t=document.createElem
     #a::-webkit-scrollbar-thumb {
       background-color: rgba(0,0,0,0.1);
     }
-    `,document.head.appendChild(a),n.id="txt",r.style="position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;",n.style="color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;",document.body.appendChild(e),document.body.appendChild(r),r.appendChild(n),e.appendChild(t),e.appendChild(o);var l="";let i=!1;document.addEventListener("keyup",a=>{if("]"===a.key&&window.getSelection().toString()){n.textContent="",l=window.getSelection().toString(),e.querySelector(".arrow")&&e.removeChild(t),e.querySelector(".img")&&e.removeChild(o),e.style.display="block",e.style.overflow="inherit";let s=window.getSelection().getRangeAt(0),d=s.getBoundingClientRect(),p=window.pageYOffset||document.documentElement.scrollTop;e.style.top=d.top-64-10+p+"px",e.style.left=d.left+d.width/2-32-15+"px",e.style.opacity=1,console.log(l)}"["===a.key&&(i?i&&(console.log("not hidden"),i=!1,e.style.display="block",r.style.display="block"):(console.log("hidden"),i=!0,e.style.display="none",r.style.display="none")),"\\"===a.key&&(e.remove(),r.remove())}),e.addEventListener("click",()=>{o.style.transform="scale(0.9)",setTimeout(()=>{o.style.transform="scale(1)"},200),e.style.width="64px",setTimeout(()=>{n.textContent="...",fetch("https://a91b-35-243-154-162.ngrok-free.app/api",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({param:l}),mode:"cors"}).then(e=>e.json()).then(e=>{console.log(e),n.textContent=e.response}).catch(e=>{console.error(e),n.textContent="❌"})},500)}),e.addEventListener("mouseenter",()=>{e.style.transform="scale(0.55)",o.style.filter="hue-rotate(180deg) brightness(110%)"}),e.addEventListener("mouseleave",()=>{e.style.transform="scale(0.5)",o.style.filter="hue-rotate(180deg) brightness(100%)"}),e.addEventListener("transitionend",()=>{"0"===e.style.opacity&&(e.style.display="none")}),document.addEventListener("mouseup",t=>{window.getSelection().toString()||(e.style.opacity=0)})}();
+    `,document.head.appendChild(i),l.id="txt",n.style="position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;",l.style="color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;",document.body.appendChild(t),document.body.appendChild(n),n.appendChild(l),t.appendChild(o),t.appendChild(r);var a="";let s=!1;document.addEventListener("keyup",e=>{if("]"===e.key&&window.getSelection().toString()){l.textContent="",a=window.getSelection().toString(),t.querySelector(".arrow")&&t.removeChild(o),t.querySelector(".img")&&t.removeChild(r),t.style.display="block",t.style.overflow="inherit";let i=window.getSelection().getRangeAt(0),d=i.getBoundingClientRect(),p=window.pageYOffset||document.documentElement.scrollTop;t.style.top=d.top-64-10+p+"px",t.style.left=d.left+d.width/2-32-15+"px",t.style.opacity=1,console.log(a)}"["===e.key&&(s?s&&(console.log("not hidden"),s=!1,t.style.display="block",n.style.display="block"):(console.log("hidden"),s=!0,t.style.display="none",n.style.display="none")),"\\"===e.key&&(t.remove(),n.remove())}),t.addEventListener("click",()=>{r.style.transform="scale(0.9)",setTimeout(()=>{r.style.transform="scale(1)"},200),t.style.width="64px",setTimeout(()=>{l.textContent="...",fetch(e+"/api",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({param:a}),mode:"cors"}).then(e=>e.json()).then(e=>{console.log(e),l.textContent=e.response}).catch(e=>{console.error(e),l.textContent="❌"})},500)}),t.addEventListener("mouseenter",()=>{t.style.transform="scale(0.55)",r.style.filter="hue-rotate(180deg) brightness(110%)"}),t.addEventListener("mouseleave",()=>{t.style.transform="scale(0.5)",r.style.filter="hue-rotate(180deg) brightness(100%)"}),t.addEventListener("transitionend",()=>{"0"===t.style.opacity&&(t.style.display="none")}),document.addEventListener("mouseup",e=>{window.getSelection().toString()||(t.style.opacity=0)})}();
