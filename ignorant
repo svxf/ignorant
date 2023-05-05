@@ -1,12 +1,4 @@
-
-javascript: (function() {
-    const pop = document.createElement("div");
-    const arrow = document.createElement("div");
-    const img = document.createElement("img");
-
-    // Pop Element
-    pop.id = "pop";
-    pop.style = `font-family: "Gotham Circular", sans-serif; 
+javascript:!function(){let e=document.createElement("div"),t=document.createElement("div"),o=document.createElement("img");e.id="pop",e.style=`font-family: "Gotham Circular", sans-serif; 
     position:absolute; 
     font-size:36px; 
     color: #fff; 
@@ -19,24 +11,13 @@ javascript: (function() {
     opacity: 0; 
     transition: opacity .2s, transform 0.2s, width 1.2s ease-in-out, left .2s ease-in-out; 
     display: none ;
-    transform: scale(0.5);`;
-
-    // Arrow Element
-    arrow.style = `position: absolute;
+    transform: scale(0.5);`,t.style=`position: absolute;
     bottom: -10px;
     left: 50%;
     margin-left: -10px;
     filter: drop-shadow(0 0 0.75rem crimson);
     transform: scale(1.2);
-    `;
-    arrow.style.backdropFilter = "none";
-    arrow.style.borderTop = "10px solid rgb(32, 32, 32)";
-    arrow.style.borderRight = "10px solid transparent";
-    arrow.style.borderLeft = "10px solid transparent";
-
-    // Image Element
-    img.src = "https://a91b-35-243-154-162.ngrok-free.app/static/aria.jpg";
-    img.style = `border-radius: 1em;
+    `,t.style.backdropFilter="none",t.style.borderTop="10px solid rgb(32, 32, 32)",t.style.borderRight="10px solid transparent",t.style.borderLeft="10px solid transparent",o.src="https://a91b-35-243-154-162.ngrok-free.app/static/aria.jpg",o.style=`border-radius: 1em;
     background-color: #242424;
     --webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
@@ -44,20 +25,7 @@ javascript: (function() {
     height: 64px;
     filter: hue-rotate(180deg);
     transition: opacity .2s, transform 0.2s;
-    `;
-
-    const imgHeight = 64;
-    const imgWidth = 64;
-
-    // Text Element
-    const cont = document.createElement("div");
-    const txt = document.createElement("span");
-
-    cont.id="a"
-    txt.id="b"
-
-    const scrollbarStyle = document.createElement('style');
-    scrollbarStyle.innerHTML = `
+    `;let r=document.createElement("div"),n=document.createElement("span");r.id="a",n.id="b";let a=document.createElement("style");a.innerHTML=`
     #a::-webkit-scrollbar {
       width: 1px;
     }
@@ -67,148 +35,4 @@ javascript: (function() {
     #a::-webkit-scrollbar-thumb {
       background-color: rgba(0,0,0,0.1);
     }
-    `;
-    document.head.appendChild(scrollbarStyle);
-
-    txt.id = "txt";
-    cont.style = `position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;`
-    txt.style = `color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;`
-
-    document.body.appendChild(pop);
-
-    document.body.appendChild(cont);
-    cont.appendChild(txt)
-
-    pop.appendChild(arrow);
-    pop.appendChild(img);
-
-    var highlightedText = "";
-
-    let hidden = false;
-
-    // Handles highlight
-    document.addEventListener("keyup", (event) => {
-        // Check if the "]" key was pressed
-        if (event.key === "]" && window.getSelection().toString()) {
-            txt.textContent = ""
-
-            // Get the text that was highlighted
-            highlightedText = window.getSelection().toString();
-
-            // Remove previous arrow and image
-            if (pop.querySelector(".arrow")) {
-                pop.removeChild(arrow);
-            }
-            if (pop.querySelector(".img")) {
-                pop.removeChild(img);
-            }
-
-            pop.style.display = "block";
-            pop.style.overflow = "inherit";
-
-            // Get the position of the highlighted text
-            const range = window.getSelection().getRangeAt(0);
-            const rect = range.getBoundingClientRect();
-
-            // Get the position of the top of the document
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Set the position of the popup box relative to the position of the highlighted text
-            pop.style.top = (rect.top - imgHeight - 10 + scrollTop) + "px";
-            pop.style.left = (rect.left + (rect.width / 2) - (imgWidth / 2)) - 15 + "px";
-
-            pop.style.opacity = 1;
-
-            console.log(highlightedText);
-        }
-        
-        // Hides everything
-        if (event.key === "[") {
-            if (!hidden) {
-                console.log("hidden");
-                hidden = true;
-                pop.style.display = "none";
-                cont.style.display = "none";
-            } else if (hidden) {
-                console.log("not hidden");
-                hidden = false;
-                pop.style.display = "block";
-                cont.style.display = "block";
-            }
-        }
-
-        // Destroy
-        if (event.key === '\\') {
-            pop.remove()
-            cont.remove()
-        }
-    })
-
-    // Actual clck method
-    pop.addEventListener("click", () => {
-        // Change the image size to make it small
-        img.style.transform = "scale(0.9)";
-        // Set a timeout to change it back to normal size after a short delay
-        setTimeout(() => {
-            img.style.transform = "scale(1)";
-        }, 200);
-
-        pop.style.width = "64px";
-        setTimeout(() => {
-
-            txt.textContent = "..."
-
-            // TODO: Make this somehow auto-update to the ngrok url
-
-            //Fake data:
-            // data = {"response":"A cat is a small carnivorous mammal of the Felidae family, typically having soft fur, retractable claws, and a short snout. Domestic cats are commonly kept as pets and are known for their playful and affectionate behavior towards humans. They are also known for their hunting abilities, agility, and cleanliness. There are many different breeds of cats, each with their own unique physical and behavioral characteristics. Cats are also popular subjects in art, literature, and popular culture."}
-
-            
-            fetch('https://a91b-35-243-154-162.ngrok-free.app/api', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    param: highlightedText
-                }),
-                mode: 'cors'
-            })
-
-
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                txt.textContent = data.response
-            })
-            .catch(error => {
-                console.error(error)
-                txt.textContent = "❌"
-            })
-        }, 500);
-    });
-
-    // Hover
-    pop.addEventListener("mouseenter", () => {
-        pop.style.transform = "scale(0.55)";
-        img.style.filter = "hue-rotate(180deg) brightness(110%)"
-    })
-    pop.addEventListener("mouseleave", () => {
-        pop.style.transform = "scale(0.5)";
-        img.style.filter = "hue-rotate(180deg) brightness(100%)"
-    })
-
-    // Hide
-    pop.addEventListener("transitionend", () => {
-        if (pop.style.opacity === "0") {
-            pop.style.display = "none";
-        }
-    });
-
-    document.addEventListener("mouseup", (event) => {
-        if (!window.getSelection().toString()) {
-            pop.style.opacity = 0;
-        }
-    });
-
-})();
+    `,document.head.appendChild(a),n.id="txt",r.style="position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;",n.style="color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;",document.body.appendChild(e),document.body.appendChild(r),r.appendChild(n),e.appendChild(t),e.appendChild(o);var l="";let i=!1;document.addEventListener("keyup",a=>{if("]"===a.key&&window.getSelection().toString()){n.textContent="",l=window.getSelection().toString(),e.querySelector(".arrow")&&e.removeChild(t),e.querySelector(".img")&&e.removeChild(o),e.style.display="block",e.style.overflow="inherit";let s=window.getSelection().getRangeAt(0),d=s.getBoundingClientRect(),p=window.pageYOffset||document.documentElement.scrollTop;e.style.top=d.top-64-10+p+"px",e.style.left=d.left+d.width/2-32-15+"px",e.style.opacity=1,console.log(l)}"["===a.key&&(i?i&&(console.log("not hidden"),i=!1,e.style.display="block",r.style.display="block"):(console.log("hidden"),i=!0,e.style.display="none",r.style.display="none")),"\\"===a.key&&(e.remove(),r.remove())}),e.addEventListener("click",()=>{o.style.transform="scale(0.9)",setTimeout(()=>{o.style.transform="scale(1)"},200),e.style.width="64px",setTimeout(()=>{n.textContent="...",fetch("https://a91b-35-243-154-162.ngrok-free.app/api",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({param:l}),mode:"cors"}).then(e=>e.json()).then(e=>{console.log(e),n.textContent=e.response}).catch(e=>{console.error(e),n.textContent="❌"})},500)}),e.addEventListener("mouseenter",()=>{e.style.transform="scale(0.55)",o.style.filter="hue-rotate(180deg) brightness(110%)"}),e.addEventListener("mouseleave",()=>{e.style.transform="scale(0.5)",o.style.filter="hue-rotate(180deg) brightness(100%)"}),e.addEventListener("transitionend",()=>{"0"===e.style.opacity&&(e.style.display="none")}),document.addEventListener("mouseup",t=>{window.getSelection().toString()||(e.style.opacity=0)})}();
