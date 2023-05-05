@@ -1,10 +1,9 @@
 
-// #Todo: make code better
 javascript: (function() {
     const pop = document.createElement("div");
     const arrow = document.createElement("div");
     const img = document.createElement("img");
-
+    console.log("up");
     // Pop Element
     pop.id = "pop";
     pop.style = `font-family: "Gotham Circular", sans-serif; 
