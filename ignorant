@@ -1,4 +1,4 @@
-let url = 'https://650b-35-230-59-69.ngrok-free.app'
+let url = 'https://3dc4-34-123-56-152.ngrok-free.app'
 
 const cont = document.createElement("div");
 const txt = document.createElement("span");
