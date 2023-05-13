@@ -1,38 +1,83 @@
-javascript:!function(){let e="https://e20c-35-243-154-162.ngrok-free.app",t=document.createElement("div"),o=document.createElement("div"),r=document.createElement("img");t.id="pop",t.style=`font-family: "Gotham Circular", sans-serif; 
-    position:absolute; 
-    font-size:36px; 
-    color: #fff; 
-    background-color: rgb(32, 32, 32); 
-    filter: drop-shadow(0 0 0.75rem crimson);
-    border-radius: 1em;
-    padding: 14PX; 
-    align-items: center;
-    flex-direction: column;
-    opacity: 0; 
-    transition: opacity .2s, transform 0.2s, width 1.2s ease-in-out, left .2s ease-in-out; 
-    display: none ;
-    transform: scale(0.5);`,o.style=`position: absolute;
-    bottom: -10px;
-    left: 50%;
-    margin-left: -10px;
-    filter: drop-shadow(0 0 0.75rem crimson);
-    transform: scale(1.2);
-    `,o.style.backdropFilter="none",o.style.borderTop="10px solid rgb(32, 32, 32)",o.style.borderRight="10px solid transparent",o.style.borderLeft="10px solid transparent",r.src=e+"/static/aria.jpg",r.style=`border-radius: 1em;
-    background-color: #242424;
-    --webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-    width: 64px;
-    height: 64px;
-    filter: hue-rotate(180deg);
-    transition: opacity .2s, transform 0.2s;
-    `;let n=document.createElement("div"),l=document.createElement("span");n.id="a",l.id="b";let i=document.createElement("style");i.innerHTML=`
-    #a::-webkit-scrollbar {
-      width: 1px;
+let url = 'https://650b-35-230-59-69.ngrok-free.app'
+
+const cont = document.createElement("div");
+const txt = document.createElement("span");
+cont.id="a"
+txt.id = "txt";
+cont.style = `position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;`
+txt.style = `color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;`
+
+document.body.appendChild(cont);
+cont.appendChild(txt)
+
+// chatgbt promtpts barely work
+const prompt = `I will give you an unformatted multiple-choice question with multiple answers here is an example of it may look like:
+What is the capital of France?
+*
+1 point
+Paris
+Madrid
+London
+Berlin
+
+When I provide you with the question, You will separate the choices into A, B, C, D, etc if there are more options, and ignore any extraneous text like "*" and point values.
+Please respond with the letter of the correct answer.
+Only respond with the letter of the correct answer.
+Just the answer letter.
+
+Like this: in that example question the answer that you should say is "A" you should not say anything before or after it, just the correct answer letter by it self.
+Got it?
+Here is my first question: `;
+var highlightedText = "";
+
+function urlHid(response) {
+    const currentUrl = location.href; // Get the current URL
+    const baseUrl = currentUrl.split('%')[0]; // Get the base URL without any appended responses
+    const newUrl = baseUrl + '/' + response; // Append the new response
+    const newTitle = 'My new page title';
+    const newState = { additionalInformation: 'wlul' };
+
+    window.history.pushState(newState, newTitle, newUrl); // This will create a new history entry with the updated URL
+}
+
+
+document.addEventListener('keydown', function(event) {
+    txt.textContent = ""
+    highlightedText = window.getSelection().toString();
+
+    if (event.key === "\\") {
+        txt.textContent = ''
+        urlHid('')
     }
-    #a::-webkit-scrollbar-track {
-      background-color: transparent;
+
+    if (event.key === "]" && window.getSelection().toString() !== '') {
+        fetch(url+'/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                param: prompt+highlightedText
+            }),
+            mode: 'cors'
+        })
+
+
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            txt.textContent = data.response
+
+            urlHid(data.response)
+        })
+        .catch(error => {
+            console.error(error)
+            txt.textContent = "❌"
+
+            urlHid('❌')
+        })
     }
-    #a::-webkit-scrollbar-thumb {
-      background-color: rgba(0,0,0,0.1);
-    }
-    `,document.head.appendChild(i),l.id="txt",n.style="position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;",l.style="color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;",document.body.appendChild(t),document.body.appendChild(n),n.appendChild(l),t.appendChild(o),t.appendChild(r);var a="";let s=!1;document.addEventListener("keyup",e=>{if("]"===e.key&&window.getSelection().toString()){l.textContent="",a=window.getSelection().toString(),t.querySelector(".arrow")&&t.removeChild(o),t.querySelector(".img")&&t.removeChild(r),t.style.display="block",t.style.overflow="inherit";let i=window.getSelection().getRangeAt(0),d=i.getBoundingClientRect(),p=window.pageYOffset||document.documentElement.scrollTop;t.style.top=d.top-64-10+p+"px",t.style.left=d.left+d.width/2-32-15+"px",t.style.opacity=1,console.log(a)}"["===e.key&&(s?s&&(console.log("not hidden"),s=!1,t.style.display="block",n.style.display="block"):(console.log("hidden"),s=!0,t.style.display="none",n.style.display="none")),"\\"===e.key&&(t.remove(),n.remove())}),t.addEventListener("click",()=>{r.style.transform="scale(0.9)",setTimeout(()=>{r.style.transform="scale(1)"},200),t.style.width="64px",setTimeout(()=>{l.textContent="...",fetch(e+"/api",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({param:a}),mode:"cors"}).then(e=>e.json()).then(e=>{console.log(e),l.textContent=e.response}).catch(e=>{console.error(e),l.textContent="❌"})},500)}),t.addEventListener("mouseenter",()=>{t.style.transform="scale(0.55)",r.style.filter="hue-rotate(180deg) brightness(110%)"}),t.addEventListener("mouseleave",()=>{t.style.transform="scale(0.5)",r.style.filter="hue-rotate(180deg) brightness(100%)"}),t.addEventListener("transitionend",()=>{"0"===t.style.opacity&&(t.style.display="none")}),document.addEventListener("mouseup",e=>{window.getSelection().toString()||(t.style.opacity=0)})}();
+
+
+  });
+  
