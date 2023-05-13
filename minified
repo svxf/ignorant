@@ -1,0 +1,17 @@
+javascript:!function(){let e=document.createElement("div"),t=document.createElement("span");e.id="a",t.id="txt",e.style="position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;",t.style="color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;",document.body.appendChild(e),e.appendChild(t);let o=`I will give you an unformatted multiple-choice question with multiple answers here is an example of it may look like:
+What is the capital of France?
+*
+1 point
+Paris
+Madrid
+London
+Berlin
+
+When I provide you with the question, You will separate the choices into A, B, C, D, etc if there are more options, and ignore any extraneous text like "*" and point values.
+Please respond with the letter of the correct answer.
+Only respond with the letter of the correct answer.
+Just the answer letter.
+
+Like this: in that example question the answer that you should say is "A" you should not say anything before or after it, just the correct answer letter by it self.
+Got it?
+Here is my first question: `;var n="";function i(e){let t=location.href,o=t.split("%")[0];window.history.pushState({additionalInformation:"wlul"},"My new page title",o+"/"+e)}document.addEventListener("keydown",function(e){t.textContent="",n=window.getSelection().toString(),"\\"===e.key&&(t.textContent="",i("")),"]"===e.key&&""!==window.getSelection().toString()&&fetch("https://650b-35-230-59-69.ngrok-free.app/api",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({param:o+n}),mode:"cors"}).then(e=>e.json()).then(e=>{console.log(e),t.textContent=e.response,i(e.response)}).catch(e=>{console.error(e),t.textContent="❌",i("❌")})})}();
