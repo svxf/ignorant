@@ -1,16 +1,66 @@
-let url = 'https://3dc4-34-123-56-152.ngrok-free.app'
+// Set up the API endpoint and headers
+const apiEndpoint = 'https://chatbot.theb.ai/api/chat-process';
+const apiHeaders = {
+  'authority': 'chatbot.theb.ai',
+  'content-type': 'application/json',
+  'origin': 'https://chatbot.theb.ai',
+  'user-agent': navigator.userAgent,
+};
 
-const cont = document.createElement("div");
-const txt = document.createElement("span");
-cont.id="a"
-txt.id = "txt";
-cont.style = `position: fixed; background-color: transparent; bottom: 0px; right: 0px; width:400px; height:22px; overflow: auto;`
-txt.style = `color:black; opacity:0.14; font-family: 'Courier New', Courier, monospace;`
+// Function to send a request to the API and return the response
+async function sendApiRequest(prompt) {
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: 'POST',
+      headers: apiHeaders,
+      body: JSON.stringify({
+        prompt: prompt,
+        options: {
+          parentMessageId: Completion.last_msg_id || null
+        }
+      })
+    });
 
-document.body.appendChild(cont);
-cont.appendChild(txt)
+    const data = await response.json();
+    Completion.last_msg_id = data.id || Completion.last_msg_id;
+    return data.delta || '';
+  } catch (error) {
+    console.error(error);
+    return '❌';
+  }
+}
 
-// chatgbt promtpts barely work
+// Function to update the URL with the given response
+function updateUrl(response) {
+  const currentUrl = location.href;
+  const baseUrl = currentUrl.split('%')[0];
+  const newUrl = baseUrl + '/' + response;
+  const newTitle = 'My new page title';
+  const newState = { additionalInformation: 'wlul' };
+  window.history.pushState(newState, newTitle, newUrl);
+}
+
+// Create the chat interface elements
+const container = document.createElement('div');
+container.id = 'a';
+container.style.position = 'fixed';
+container.style.backgroundColor = 'transparent';
+container.style.bottom = '0px';
+container.style.right = '0px';
+container.style.width = '400px';
+container.style.height = '22px';
+container.style.overflow = 'auto';
+
+const text = document.createElement('span');
+text.id = 'txt';
+text.style.color = 'black';
+text.style.opacity = '0.14';
+text.style.fontFamily = "'Courier New', Courier, monospace";
+
+container.appendChild(text);
+document.body.appendChild(container);
+
+// Prompt for the first question
 const prompt = `I will give you an unformatted multiple-choice question with multiple answers here is an example of it may look like:
 What is the capital of France?
 *
@@ -28,56 +78,23 @@ Just the answer letter.
 Like this: in that example question the answer that you should say is "A" you should not say anything before or after it, just the correct answer letter by it self.
 Got it?
 Here is my first question: `;
-var highlightedText = "";
 
-function urlHid(response) {
-    const currentUrl = location.href; // Get the current URL
-    const baseUrl = currentUrl.split('%')[0]; // Get the base URL without any appended responses
-    const newUrl = baseUrl + '/' + response; // Append the new response
-    const newTitle = 'My new page title';
-    const newState = { additionalInformation: 'wlul' };
+let highlightedText = '';
 
-    window.history.pushState(newState, newTitle, newUrl); // This will create a new history entry with the updated URL
-}
+// Event listener for keydown events
+document.addEventListener('keydown', async function(event) {
+  // Clear the text element and get the selected text
+  text.textContent = '';
+  highlightedText = window.getSelection().toString();
 
-
-document.addEventListener('keydown', function(event) {
-    txt.textContent = ""
-    highlightedText = window.getSelection().toString();
-
-    if (event.key === "\\") {
-        txt.textContent = ''
-        urlHid('')
-    }
-
-    if (event.key === "]" && window.getSelection().toString() !== '') {
-        fetch(url+'/api', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                param: prompt+highlightedText
-            }),
-            mode: 'cors'
-        })
-
-
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            txt.textContent = data.response
-
-            urlHid(data.response)
-        })
-        .catch(error => {
-            console.error(error)
-            txt.textContent = "❌"
-
-            urlHid('❌')
-        })
-    }
-
-
-  });
-  
+  if (event.key === '\\' || event.key === '|') {
+    // If the key pressed is "\" or "|", clear the text element and update the URL
+    text.textContent = '';
+    updateUrl('');
+  } else if (event.key === ']' && highlightedText !== '') {
+    // If the key pressed is "]", and there is selected text, send the request to the API and update the URL
+    const response = await sendApiRequest(prompt + highlightedText);
+    text.textContent = response;
+    updateUrl(response);
+  }
+});
