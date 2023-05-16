@@ -15,4 +15,4 @@ Just the answer letter.
 Like this: in that example question the answer that you should say is "A" you should not say anything before or after it, just the correct answer letter by it self.
 Got it?
 ALSO: when you are making your response, do not bold the text or make it look something like ""answer".
-Here is my first question: `;document.addEventListener("keydown",function(t){if("\\"===t.key&&(i.textContent=""),"]"===t.key){let o=window.getSelection().toString().trim();o&&e.request(o).then(e=>{i.textContent=e})}if("["===t.key){let a=window.getSelection().toString().trim();a&&e.request(n+a).then(e=>{i.textContent=e})}})}();
+Here is my first question: `;document.addEventListener("keydown",function(t){if("\\"===t.key&&(i.textContent=""),"]"===t.key){i.textContent="";let o=window.getSelection().toString().trim();o&&e.request(o).then(e=>{i.textContent=e})}if("["===t.key){i.textContent="";let a=window.getSelection().toString().trim();a&&e.request(n+a).then(e=>{i.textContent=e})}})}();
