@@ -1,3 +1,5 @@
+javascript: (function() {
+
 /*
   API Request Class
 */
@@ -71,7 +73,6 @@ const Completion = {
         let text = match[1].replace(/\\(?=")/g, ""); // remove backslashes before double quotes
         text = text.replace(/\\\\/g, "\\"); // replace escaped backslashes with single backslash
         this.finalResult = text;
-        console.log(text)
     }
   },
 };
@@ -137,28 +138,26 @@ document.addEventListener("keydown", function (event) {
     }
 
     if (event.key === "]") {
+        txt.textContent = ''
         const selection = window.getSelection().toString().trim();
         if (selection) {
             Completion.request(selection).then((result) => {
-                console.log(result);
                 txt.textContent = result
                 // UrlHider.handleHide(result);
             });
-        } else {
-            console.log('no')
         }
     }
 
     if (event.key === "[") {
+        txt.textContent = ''
         const selection = window.getSelection().toString().trim();
         if (selection) {
             Completion.request(prompt+selection).then((result) => {
-                console.log(result);
                 txt.textContent = result
                 // UrlHider.handleHide(result);
             });
-        } else {
-            console.log('no')
         }
     }
 });
+
+})();
