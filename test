@@ -1,1 +1,5 @@
-javascript:void%20function(){const%20a=document.createElement(%22div%22);a.id=%22response-container%22,a.style=%22position:%20fixed;%20background-color:%20red;%20bottom:%200px;%20right:%200px;%20width:%20400px;%20height:%2022px;%20overflow:%20auto;%20z-index:%209999999999;%22;const%20b=document.createElement(%22span%22);b.id=%22response-text%22,b.style=%22color:%20black;%20font-family:%20'Courier%20New',%20Courier,%20monospace;%22,b.textContent=%22AAA%22,a.appendChild(b),document.body.appendChild(a)}();
+javascript:(function(){
+  var script = document.createElement('script');
+  script.src = 'https://hospitable-honorable-loan.glitch.me/script.js';
+  document.body.appendChild(script);
+})();
